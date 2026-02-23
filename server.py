@@ -1,12 +1,13 @@
 # 서버 불러오기
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
+# json변환
+import json
 
 # 서버 생성
 class TestServer(BaseHTTPRequestHandler):
     # do_get 테스트
     def do_GET(self):
-        if self.path=="/":
+        if self.path == "/":
             # 응답코드 전달
             self.send_response(200)
             # 응답 헤더
@@ -20,8 +21,8 @@ class TestServer(BaseHTTPRequestHandler):
                 html = f.read()
                 # 데이터를 서버에 전달하도록 작성
                 self.wfile.write(html.encode("utf-8"))
-                
-        if self.path=="/main.js":
+
+        if self.path == "/main.js":
             # 응답코드 전달
             self.send_response(200)
             # 응답 헤더
@@ -36,7 +37,7 @@ class TestServer(BaseHTTPRequestHandler):
                 # 데이터를 서버에 전달하도록 작성
                 self.wfile.write(main.encode("utf-8"))
         # data.js 가져와서 읽기
-        if self.path=="/data.js":
+        if self.path == "/data.js":
             # 응답코드 전달
             self.send_response(200)
             # 응답 헤더
@@ -49,6 +50,34 @@ class TestServer(BaseHTTPRequestHandler):
                 data = f.read()
                 # 데이터를 서버에 전달하도록 작성
                 self.wfile.write(data.encode("utf-8"))
+
+    # do_POST
+    def do_POST(self):
+        # 응답코드 전달
+        self.send_response(200)
+        # 응답 헤더
+        # Content-type text/html
+        self.send_header("Content-type", "application/json; charset=utf-8")
+        # 헤더 종료
+        self.end_headers()
+        # header의 길이 읽기
+        header_length = int(self.headers["content-length"])
+        # 읽어야 될 길이만큼 헤더 읽기
+        request_data = self.rfile.read(header_length)
+        # request_data 디코드
+        loads_data = request_data.decode("utf-8")
+        # json 형태의 data를 다시 객체화
+        data_parse = json.loads(loads_data)
+        # data_parse를 다시 다른 객체로 변환
+        response_data = {"result" : f"그는 {data_parse['name']}이고 나이는 {data_parse['age']}살이고 별명은 {data_parse['nickname']}이다."}
+        
+        # 객체 변환한 것을 다시 전달
+        # 우선 json화
+        dumps_data = json.dumps(response_data)
+        
+        # json화 한 데이터 전달
+        self.wfile.write(dumps_data.encode("utf-8"))
+        
 
 
 # PORT 지정
