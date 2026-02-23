@@ -13,7 +13,13 @@ const buttonElement = formElement.querySelector("button");
 // e.preventDefault() 진행
 // ajax의 핵심중 하나
 
+// async를 지정하여 비동기 작업을 하도록 함
+
 const ajaxTest = async (e) => {
+
+  // 여기까지 비동기 작업
+
+
   // form 이벤트 막아줌
   // 새로고침 방지
   e.preventDefault();
@@ -35,9 +41,31 @@ const ajaxTest = async (e) => {
       // index에 해당하는 배열순번의 data 반환
       serverSendValue = data[index];
     }
-  });
+  }); 
 
-  console.log(serverSendValue)
+  // 서버와 동작하고
+  // 동작한 결과 값 받기
+
+  const request = await fetch("http://localhost:8000/",{
+    // post 전달
+    method: "POST",
+    // 헤더 지정
+    // json 전달할거라
+    // application/json
+    headers: {"Content-type":"application/json"},
+    // body 지정
+    // 객체를 json으로 변환
+    body: JSON.stringify(serverSendValue)
+
+
+  })
+
+  // 결과(json)을 객체로 받음
+  const response = await request.json()
+
+  // 결과 출력
+  console.log(response)
+
 
 };
 
