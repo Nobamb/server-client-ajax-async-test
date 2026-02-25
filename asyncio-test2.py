@@ -1,7 +1,8 @@
 # asyncio 가져옴
 import asyncio
 
-# # 만약에 비동기 함수 없이 
+
+# # 만약에 비동기 함수 없이 ========================================================
 # # asyncio 실행하였을 경우
 
 
@@ -37,6 +38,8 @@ import asyncio
 
 
 
+# 비동기 함수 예시=========================================
+
 
 async def test1():
     # 1
@@ -60,7 +63,7 @@ async def test3():
     print("world3")
     
     
-# 직렬 사용(asyncio.gather 사용 x)
+# 직렬 사용(asyncio.gather 사용 x) ================================================
 # async def async_func():
 #     await test1()
 #     await test2()
@@ -69,7 +72,17 @@ async def test3():
 #     # 5
 #     print("완료")
     
-# 병렬 사용(asyncio.gather 사용 o)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+# 병렬 사용(asyncio.gather 사용 o) ===================================================
 
 # (시작)
 # hello1
@@ -90,7 +103,7 @@ async def async_func():
     
     
     
-# # 비동기 함수를 asynccio.run 없이 실행하였을 경우
+# # 비동기 함수를 asynccio.run 없이 실행하였을 경우 ==================================================
 # # 그냥 실행
 # RuntimeWarning: coroutine 'async_func' was never awaited
 #   async_func()
@@ -99,7 +112,7 @@ async def async_func():
 
 # async_func()
 
-# asyncio.run으로 실행
+# asyncio.run으로 실행 ===================================================
 # (모범답안)
 
 # hello1
@@ -117,6 +130,6 @@ async def async_func():
 
 asyncio.run(async_func())
 
-# 마무리
+# 마무리(비동기 외부의 동작)
 # 6
 print("마무리")
