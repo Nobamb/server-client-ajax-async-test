@@ -5,11 +5,14 @@ import asyncio
 # task에서 받은 값을 기반으로
 # 함수를 실행하도록 함
 async def task_after(task):
+    # 대기 한 후 task값 받기
+    result = await task
+
     print("task_after 시작")
     # 대기
     await asyncio.sleep(2)
     # 결과 출력
-    print(f"결과: {task}")
+    print(f"결과: {result}")
 
 
 # task에서 값 저장
@@ -25,16 +28,12 @@ async def task_result(value):
 
 
 
-
-
-
-
 # main 실행
 async def main():
 
     # task 지정
-    task1 = await asyncio.create_task(task_result(1))
-    task2 = await asyncio.create_task(task_result(2))
+    task1 = asyncio.create_task(task_result(1))
+    task2 = asyncio.create_task(task_result(2))
 
     # gather를 통해 여러개 지정
     await asyncio.gather(task_after(task1), task_after(task2))
